@@ -27,49 +27,33 @@ export default function Home() {
         onChange={handleFileUpload}
       />
 
-      <p>
-        File:
-        {" "}
-        {fileName || "Belum ada"}
-      </p>
+      <p>File:{" "}{fileName || "Belum ada"}</p>
+      <p>Total Records:{" "}{history.length}</p>
 
-      <p>
-        Total Records:
-        {" "}
-        {history.length}
-      </p>
+      {history.length > 0 && (
+        <>
+            <h2>First Record</h2>
+            <pre>{JSON.stringify(history, null, 2)}</pre>
+
+            <h2>Preview Data</h2>
+
+            {history.slice(0, 10).map((item, index) => (
+                <div
+                    key={index}
+                    style={{
+                    border: "1px solid #ccc",
+                    padding: "1rem",
+                    marginBottom: "1rem"
+                    }}
+                >
+                    <h3>{item.title}</h3>
+
+                    <p>Artist:{" "}{item.subtitles?.[0]?.name}</p>
+                    <p>Date:{" "}{item.time}</p>
+                </div>
+            ))}
+        </>
+        )}
     </div>
   );
 }
-
-{history.length > 0 && (
-  <>
-    <h2>First Record</h2>
-    <pre>{JSON.stringify(history, null, 2)}</pre>
-  </>
-)}
-
-{history.slice(0, 10).map((item, index) => (
-  <div
-    key={index}
-    style={{
-      border: "1px solid #ccc",
-      padding: "1rem",
-      marginBottom: "1rem"
-    }}
-  >
-    <h3>{item.title}</h3>
-
-    <p>
-      Artist:
-      {" "}
-      {item.subtitles?.[0]?.name}
-    </p>
-
-    <p>
-      Date:
-      {" "}
-      {item.time}
-    </p>
-  </div>
-))}
